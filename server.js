@@ -10,6 +10,9 @@ function doOnRequest(request, response) {
     let homeFile = fs.readFileSync('index.html', 'utf8');
     response.write(homeFile);
     response.end('Welcome to Twitter');
+  } else if (request.method === 'GET' && request.url === '/style.css') {
+    var styles = fs.readFileSync('style.css', 'utf8');
+    response.end(styles);
   } else if (request.method === 'POST' && request.url === '/sayHi') {
     fs.appendFileSync('hi_log.txt', 'Somebody said hi.\n');
     response.write('hi back to you!');
