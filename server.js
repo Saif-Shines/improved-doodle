@@ -2,11 +2,7 @@ const http = require('http');
 const fs = require('fs');
 
 function doOnRequest(request, response) {
-  // Send back a message saying "Welcome to Twitter"
-  // code here...
   if (request.method === 'GET' && request.url === '/') {
-    // read the index.html file and send it back to the client
-    // code here...
     let homeFile = fs.readFileSync('index.html', 'utf8');
     response.write(homeFile);
     response.end('Welcome to Twitter');
@@ -17,9 +13,14 @@ function doOnRequest(request, response) {
     fs.appendFileSync('hi_log.txt', 'Somebody said hi.\n');
     response.write('hi back to you!');
     response.end();
+  } else if (request.method === 'PUT' && request.url === '/update') {
+    request.on('data', function (chunk) {
+      let updateContents = chunk.toString();
+      fs.writeFileSync('hi_log.txt', updateContents);
+      response.statusCode = 200;
+      response.end();
+    });
   } else if (request.method === 'POST' && request.url === '/greeting') {
-    // accumulate the request body in a series of chunks
-    // code here...
     request.on('data', (data) => {
       let streamOutData = data.toString();
       fs.appendFileSync('hi_log.txt', `${streamOutData}\n`);
@@ -30,8 +31,6 @@ function doOnRequest(request, response) {
       }
     });
   } else {
-    // Handle 404 error: page not found
-    // code here...
     response.end('404 Not Found');
   }
 }

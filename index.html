@@ -10,6 +10,7 @@
     <button id="hiButton">Say hi!</button>
     <button id="helloButton">Greet the server with hello!</button>
     <button id="whatsUpButton">Greet the server with what's up!</button>
+    <button id="updateBtn">Update text file</button>
   </body>
   <script>
     var xmlHttp = new XMLHttpRequest();
@@ -38,6 +39,12 @@
       xmlHttp.open('POST', '/greeting', true);
       xmlHttp.setRequestHeader('Content-type', 'text');
       xmlHttp.send("what's up"); // what is receiving this greeting?
+    };
+
+    updateBtn.onclick = function () {
+      xmlHttp.open('PUT', '/update', true);
+      xmlHttp.setRequestHeader('Content-type', 'text');
+      xmlHttp.send('updated message');
     };
   </script>
 </html>
