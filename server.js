@@ -20,6 +20,16 @@ function doOnRequest(request, response) {
       response.statusCode = 200;
       response.end();
     });
+  } else if (request.method === 'DELETE' && request.url === '/delete') {
+    try {
+      fs.unlinkSync('hi_log.txt', (error) => {
+        if (err) throw err;
+        response.end('file delted successfully!');
+      });
+    } catch (error) {
+      response.statusCode = 500;
+      response.end('file deletion has issues');
+    }
   } else if (request.method === 'POST' && request.url === '/greeting') {
     request.on('data', (data) => {
       let streamOutData = data.toString();

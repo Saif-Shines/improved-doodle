@@ -11,6 +11,7 @@
     <button id="helloButton">Greet the server with hello!</button>
     <button id="whatsUpButton">Greet the server with what's up!</button>
     <button id="updateBtn">Update text file</button>
+    <button id="deleteBtn">Delete text file</button>
   </body>
   <script>
     var xmlHttp = new XMLHttpRequest();
@@ -45,6 +46,12 @@
       xmlHttp.open('PUT', '/update', true);
       xmlHttp.setRequestHeader('Content-type', 'text');
       xmlHttp.send('updated message');
+    };
+
+    deleteBtn.onclick = function () {
+      xmlHttp.open('DELETE', '/delete', true);
+      xmlHttp.setRequestHeader('Content-type', 'text');
+      xmlHttp.send('Delete message');
     };
   </script>
 </html>
